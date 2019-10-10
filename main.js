@@ -26,10 +26,14 @@ angular.module('app', [])
             $scope.verRecomendacoes = false;
         };
 
-        $scope.adicionarALista = (key, jogo) => {
+        $scope.adicionarALista = (jogo) => {
             $scope.listaCompleta.push(jogo);
-            $scope.lista.splice(key, 1);
         };
+
+        $scope.limparLista = () => {
+            $scope.listaCompleta = [];
+            $scope.lista = [];
+        }
 
         $scope.recomendarJogos = () => {
             $scope.verLista = false;
@@ -41,6 +45,7 @@ angular.module('app', [])
             }
             $http.post(`http://localhost:5000/recomendation`, $scope.listaSimples)
                 .then(function (response) {
+                    $scope.recomendacao = [];
                     $scope.recomendacao = response.data;
                 })
                 .catch(function () {

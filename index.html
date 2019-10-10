@@ -18,17 +18,17 @@
         <!-- Pesquisa -->
         <div class="row">
             <div class="col">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
+                <div class="row align-items-center text-center">
+                    <div class="col-md-6 text-center">
                         <input type="text" ng-model="name" class="form-control form-control-lg" placeholder="Digite para buscar um jogo:">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 text-center">
                         <button type="button" class="btn btn-primary btn-md col" ng-click="buscarJogos()">Buscar</button>
                     </div>
-                    <div class="col-md-2">
-                            <button type="button" class="btn btn-info btn-md col" ng-click="verListaDesejos()">Ver lista de desejo</button>
+                    <div class="col-md-2 text-center">
+                            <button type="button" class="btn btn-info btn-md col" ng-click="verListaDesejos()">Ver lista de desejos</button>
                         </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 text-center">
                         <button type="button" class="btn btn-info btn-md col" ng-click="recomendarJogos()">Ver recomendações</button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="col-md-2"><b>Desenvolvedora</b></div>
                     <div class="col-md-2"></div>
                 </div>
-                <div class="row list-line text-center" ng-repeat="(key,jogo) in lista">
+                <div class="row list-line text-center" ng-repeat="jogo in lista">
                     <div class="col-md-12">
                         <div class="row mt-md-1">
                             <div class="col-md-2">{{jogo.nome}}</div>
@@ -62,8 +62,8 @@
                             <div class="col-md-1">{{jogo.classificacao}}</div>
                             <div class="col-md-2">{{jogo.publicadora}}</div>
                             <div class="col-md-2">{{jogo.desenvolvedora}}</div>
-                            <div class="col-md-2" ng-click="adicionarALista(key, jogo)">
-                                <Button class="btn btn-primary">Adicionar a lista</Button>
+                            <div class="col-md-2" ng-click="adicionarALista(jogo)">
+                                <Button class="btn btn-primary">Adicionar à lista</Button>
                             </div>
                         </div>
                     </div>
@@ -74,33 +74,32 @@
         <div class="row" ng-if="verDesejos">
                 <div class="col-md-12">
                     <div class="row text-center">
-                        <div class="col-md-12">
+                        <div class="col-md-10">
                             <h3>Lista de Desejos</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <Button class="btn btn-danger" ng-click="limparLista()">Limpar desejos</Button>
                         </div>
                     </div>
                     <div class="row text-center alert alert-primary">
-                        <div class="col-md-2"><b>Nome</b></div>
+                        <div class="col-md-4"><b>Nome</b></div>
                         <div class="col-md-1"><b>Plataforma</b></div>
                         <div class="col-md-1"><b>Gênero</b></div>
                         <div class="col-md-1"><b>Ano</b></div>
                         <div class="col-md-1"><b>Classificacao</b></div>
                         <div class="col-md-2"><b>Publicadora</b></div>
                         <div class="col-md-2"><b>Desenvolvedora</b></div>
-                        <div class="col-md-2"></div>
                     </div>
-                    <div class="row list-line text-center" ng-repeat="(key,jogo) in listaCompleta">
+                    <div class="row list-line text-center" ng-repeat="(key,jogo) in listaCompleta track by $index">
                         <div class="col-md-12">
                             <div class="row mt-md-1">
-                                <div class="col-md-2">{{jogo.nome}}</div>
+                                <div class="col-md-4">{{jogo.nome}}</div>
                                 <div class="col-md-1">{{jogo.plataforma}}</div>
                                 <div class="col-md-1">{{jogo.genero}}</div>
                                 <div class="col-md-1">{{jogo.ano}}</div>
                                 <div class="col-md-1">{{jogo.classificacao}}</div>
                                 <div class="col-md-2">{{jogo.publicadora}}</div>
                                 <div class="col-md-2">{{jogo.desenvolvedora}}</div>
-                                <div class="col-md-2" ng-click="adicionarALista(key, jogo)">
-                                    <Button class="btn btn-primary">Adicionar a lista</Button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,28 +114,24 @@
                         </div>
                     </div>
                     <div class="row text-center alert alert-primary">
-                        <div class="col-md-2"><b>Nome</b></div>
+                        <div class="col-md-4"><b>Nome</b></div>
                         <div class="col-md-1"><b>Plataforma</b></div>
                         <div class="col-md-1"><b>Gênero</b></div>
                         <div class="col-md-1"><b>Ano</b></div>
                         <div class="col-md-1"><b>Classificacao</b></div>
                         <div class="col-md-2"><b>Publicadora</b></div>
                         <div class="col-md-2"><b>Desenvolvedora</b></div>
-                        <div class="col-md-2"></div>
                     </div>
-                    <div class="row list-line text-center" ng-repeat="(key,jogo) in recomendacao |  limitTo : 10">
+                    <div class="row list-line text-center" ng-repeat="(key,jogo) in recomendacao |  limitTo : 10 | orderBy : '-similaridade'">
                         <div class="col-md-12">
                             <div class="row mt-md-1">
-                                <div class="col-md-2">{{jogo.nome}}</div>
+                                <div class="col-md-4">{{jogo.nome}}</div>
                                 <div class="col-md-1">{{jogo.plataforma}}</div>
                                 <div class="col-md-1">{{jogo.genero}}</div>
                                 <div class="col-md-1">{{jogo.ano}}</div>
                                 <div class="col-md-1">{{jogo.classificacao}}</div>
                                 <div class="col-md-2">{{jogo.publicadora}}</div>
                                 <div class="col-md-2">{{jogo.desenvolvedora}}</div>
-                                <div class="col-md-2" ng-click="adicionarALista(key, jogo)">
-                                    <Button class="btn btn-primary">Adicionar a lista</Button>
-                                </div>
                             </div>
                         </div>
                     </div>
