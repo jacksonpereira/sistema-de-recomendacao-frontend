@@ -47,6 +47,9 @@ angular.module('app', [])
                 .then(function (response) {
                     $scope.recomendacao = [];
                     $scope.recomendacao = response.data;
+                    console.log('====================================');
+                    console.log($scope.recomendacao);
+                    console.log('====================================');
                 })
                 .catch(function () {
                     $window.alert("Ocorreu um erro ao recomendar os jogos.\nTente novamente mais tarde.");
@@ -54,7 +57,7 @@ angular.module('app', [])
         };
 
         $scope.avaliarRecomendacao = (nota) => {
-            body = {'option': $scope.listaSimples, 'recomendation': $scope.recomendacao, 'nota':nota};
+            body = {'option': $scope.listaCompleta, 'recomendation': $scope.recomendacao, 'nota':nota};
             $http.post(`http://localhost:5000/recomendation/evaluation`, body)
                 .then(function (response) {
                     if(response.data==1){
@@ -62,7 +65,13 @@ angular.module('app', [])
                     }else{
                         $window.alert("Obrigado por avaliar nosso sistema! Estamos melhorando para te oferecer as melhores opções.");
                     }
-                    $scope.verAvaliacao = false;
+                    $scope.verLista = true;
+                    $scope.verDesejos = false;
+                    $scope.verRecomendacoes = false;
+                    $scope.listaCompleta = [];
+                    $scope.lista = [];
+                    $scope.name = null;
+                    $window.location.reload();
                 })
                 .catch(function () {
                     $window.alert("Ocorreu um erro ao avaliar os jogos.\nTente novamente mais tarde.");
